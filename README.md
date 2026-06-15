@@ -5,10 +5,12 @@ A single-sided C64 demo (Spindle 3.1 / pefchain): a SID cover of Björk's
 video and dithered to the C64 palette — are streamed off disk and cut on the
 song's structural transitions.
 
-**Status (v0.3.0):** music + 23 vision-curated koala images cut on song
-transitions + **lyric sprites** synced to the vocals. One disk, one
-playthrough, 50 Hz locked, load-on-the-go (double-buffered across two VIC
-banks). Renders to `~/Videos/human_behaviour_c64_lyrics.mp4`.
+**Status (v0.3.2):** music + 23 vision-curated koala images cut on song
+transitions + **animated lyric sprites** (slide-in, sine bob, colour
+shimmer) synced to the vocals, and a **full-demo loop** (`--loop 0`) that
+restarts music + images + lyrics together. One disk, 50 Hz locked,
+load-on-the-go (double-buffered across two VIC banks). Captured to
+`~/Videos/human_behaviour_c64.mp4`.
 
 Lyrics: a resident engine at `$0c00` (loaded with the SID via `mkpef
 --music`, alive all parts) keeps a song-frame clock, looks up the current
