@@ -43,5 +43,5 @@ done
 "$MKPEF" -o parts_pef/p21.pef src/p21.efo koala/img21.kla,a000,2,1f40 koala/img21.kla,8000,1f42,3e8 koala/img21.kla,8400,232a,3e8
 "$MKPEF" -o parts_pef/p22.pef src/p22.efo koala/img22.kla,6000,2,1f40 koala/img22.kla,4000,1f42,3e8 koala/img22.kla,4400,232a,3e8
 echo ">>> linking with pefchain"
-"$PEFCHAIN" -v --title "human/bjork" --disk-id "HB" -o out/human.d64 script_demo
+"$PEFCHAIN" -v --title "human/bjork" --disk-id "HB" --loop 0 -o out/human.d64 script_demo
 ls -l out/human.d64

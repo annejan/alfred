@@ -198,15 +198,17 @@ def main():
                          restag=restag, sprtag=sprtag)
         open(os.path.join(src, f"p{nn}_efo.asm"), 'w').write(efo)
 
-    # pefchain script
-    lines = []
+    # pefchain script. Label 0 at the top; EVERY part advances on its timer
+    # (no 'stay'); pefchain --loop 0 jumps back to part0 at the end. part0's
+    # setup re-INITs the SID and init_lyric (FRAME/CURSOR=0), so music, images
+    # AND lyrics all restart together — a clean full-demo loop.
+    lines = ["0:"]
     for i in range(N):
-        cond = "stay" if i == N-1 else "04 = 01"
-        lines.append(f"parts_pef/p{i:02d}.pef\t\t{cond}")
+        lines.append(f"parts_pef/p{i:02d}.pef\t\t04 = 01")
     open(os.path.join(ROOT, 'script_demo'), 'w').write(
-        "# Björk Human Behaviour koala slideshow — pefchain script\n"
+        "# Björk Human Behaviour koala slideshow — pefchain script.\n"
         "# Each image holds dur_frames (interrupt drains 16-bit timer -> $04=1),\n"
-        "# then advances. Last image stays. SID resident via --music.\n"
+        "# then advances. --loop 0 restarts the whole demo (music+images+lyrics).\n"
         + "\n".join(lines) + "\n")
 
     # build script
@@ -245,7 +247,7 @@ def main():
         bl.append(f'"$MKPEF" -o parts_pef/p{nn}.pef src/p{nn}.efo {data}{music}')
     bl += [
         'echo ">>> linking with pefchain"',
-        '"$PEFCHAIN" -v --title "human/bjork" --disk-id "HB" '
+        '"$PEFCHAIN" -v --title "human/bjork" --disk-id "HB" --loop 0 '
         '-o out/human.d64 script_demo',
         'ls -l out/human.d64']
     p = os.path.join(ROOT, 'build_demo.sh')
