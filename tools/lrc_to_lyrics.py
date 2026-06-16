@@ -23,8 +23,11 @@ ABBR = {
  "YOU KNOW I'LL TAKE YOU TO THE TOP": "I'LL TAKE YOU TO THE TOP",
  "IT'S PARTY TIME AND NOT ONE MINUTE WE CAN LOSE": None,
  "DA BA DA DAM DEE DEE DEE DA DEE DA DA DAM": "DA BA DA DAM DEE DEE",
- "SATURDAY NIGHT SATURDAY NIGHT": "SATURDAY NIGHT",   # no lone "NIGHT" orphan
 }
+# "Saturday night, Saturday night" chorus run -> teasing build, resolve to
+# "SATURDAY NIGHT" on the last of each run.
+SAT="SATURDAY NIGHT SATURDAY NIGHT"
+SATBUILD=["SATURDAY","SATURDAY SATURDAY","SATURDAY NIGHT","SATURDAY NIGHT SATURDAY"]
 def clean(s):
     s=re.sub(r'\(.*?\)','',s).replace(',','').upper().strip()
     s=re.sub(r'\s+',' ',s)
@@ -35,14 +38,25 @@ def fit(s):
     cut=s.rfind(' ',0,MAXC+1)
     if cut<=0: return [s[:MAXC]]
     a,b=s[:cut],s[cut+1:]
-    if len(b)<=4: return [a]          # drop tiny orphan tails (e.g. lone "NIGHT")
+    if len(b)<=4: return [a]          # drop tiny orphan tails
     return [a,b]
 
-ent=[]
+# parse rows, then apply the Saturday build
+rows=[]
 for l in open(LRC,encoding='utf-8'):
     m=re.match(r'\[(\d+):(\d+\.\d+)\]\s*(.*)',l)
     if not m: continue
-    t=int(m.group(1))*60+float(m.group(2)); txt=clean(m.group(3))
+    rows.append((int(m.group(1))*60+float(m.group(2)), clean(m.group(3))))
+c=0
+for i,(t,txt) in enumerate(rows):
+    if txt==SAT:
+        nxt=rows[i+1][1] if i+1<len(rows) else ""
+        if nxt==SAT: rows[i]=(t,SATBUILD[c%4]); c+=1
+        else: rows[i]=(t,"SATURDAY NIGHT"); c=0
+    else: c=0
+
+ent=[]
+for t,txt in rows:
     st=round(S0_SID+(t-V0_LRC)*RATIO,1)
     if not txt: ent.append((st,"")); continue
     parts=fit(txt)
