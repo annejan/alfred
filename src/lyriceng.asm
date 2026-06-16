@@ -271,7 +271,7 @@ ss_p2:
         rts
 
 sprx:   .byte 84,108,132,156,180,204,228,252
-faderamp: .byte 6,11,12,14,15           // colour pulse trough(blue)->peak(ltgrey)
+faderamp: .byte 0,6,11,4,12            // darker pulse: black->blue->dkgrey->purple->grey
 destlo: .fill 24, <(B1 + floor(i/3)*64 + 21 + (i-floor(i/3)*3))
 desthi: .fill 24, >(B1 + floor(i/3)*64 + 21 + (i-floor(i/3)*3))
 sinetab:
