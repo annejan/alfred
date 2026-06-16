@@ -2,140 +2,140 @@
  "bpm": 125.0,
  "beat": 0.48,
  "phase": 0.0,
- "song_len": 260.5,
+ "song_len": 217.1,
  "video_len": 238.0,
  "segments": [
   {
    "idx": 0,
    "start": 0.0,
-   "end": 20.64,
-   "dur_frames": 1032,
+   "end": 17.201,
+   "dur_frames": 860,
    "video_t": 5.657
   },
   {
    "idx": 1,
-   "start": 20.64,
-   "end": 37.92,
-   "dur_frames": 864,
+   "start": 17.201,
+   "end": 31.602,
+   "dur_frames": 720,
    "video_t": 23.594
   },
   {
    "idx": 2,
-   "start": 37.92,
-   "end": 55.2,
-   "dur_frames": 864,
+   "start": 31.602,
+   "end": 46.004,
+   "dur_frames": 720,
    "video_t": 39.381
   },
   {
    "idx": 3,
-   "start": 55.2,
-   "end": 66.24,
-   "dur_frames": 552,
+   "start": 46.004,
+   "end": 55.204,
+   "dur_frames": 460,
    "video_t": 53.458
   },
   {
    "idx": 4,
-   "start": 66.24,
-   "end": 82.56,
-   "dur_frames": 816,
+   "start": 55.204,
+   "end": 68.805,
+   "dur_frames": 680,
    "video_t": 64.992
   },
   {
    "idx": 5,
-   "start": 82.56,
-   "end": 99.36,
-   "dur_frames": 840,
+   "start": 68.805,
+   "end": 82.806,
+   "dur_frames": 700,
    "video_t": 80.034
   },
   {
    "idx": 6,
-   "start": 99.36,
-   "end": 109.44,
-   "dur_frames": 504,
+   "start": 82.806,
+   "end": 91.207,
+   "dur_frames": 420,
    "video_t": 93.541
   },
   {
    "idx": 7,
-   "start": 109.44,
-   "end": 128.16,
-   "dur_frames": 936,
+   "start": 91.207,
+   "end": 106.808,
+   "dur_frames": 780,
    "video_t": 105.118
   },
   {
    "idx": 8,
-   "start": 128.16,
-   "end": 136.8,
-   "dur_frames": 432,
+   "start": 106.808,
+   "end": 114.009,
+   "dur_frames": 360,
    "video_t": 119.459
   },
   {
    "idx": 9,
-   "start": 136.8,
-   "end": 152.16,
-   "dur_frames": 768,
+   "start": 114.009,
+   "end": 126.81,
+   "dur_frames": 640,
    "video_t": 129.194
   },
   {
    "idx": 10,
-   "start": 152.16,
-   "end": 168.0,
-   "dur_frames": 792,
+   "start": 126.81,
+   "end": 140.011,
+   "dur_frames": 660,
    "video_t": 143.359
   },
   {
    "idx": 11,
-   "start": 168.0,
-   "end": 183.36,
-   "dur_frames": 768,
+   "start": 140.011,
+   "end": 152.812,
+   "dur_frames": 640,
    "video_t": 157.699
   },
   {
    "idx": 12,
-   "start": 183.36,
-   "end": 190.56,
-   "dur_frames": 360,
+   "start": 152.812,
+   "end": 158.812,
+   "dur_frames": 300,
    "video_t": 169.496
   },
   {
    "idx": 13,
-   "start": 190.56,
-   "end": 202.08,
-   "dur_frames": 576,
+   "start": 158.812,
+   "end": 168.413,
+   "dur_frames": 480,
    "video_t": 177.258
   },
   {
    "idx": 14,
-   "start": 202.08,
-   "end": 212.16,
-   "dur_frames": 504,
+   "start": 168.413,
+   "end": 176.814,
+   "dur_frames": 420,
    "video_t": 187.389
   },
   {
    "idx": 15,
-   "start": 212.16,
-   "end": 227.52,
-   "dur_frames": 768,
+   "start": 176.814,
+   "end": 189.615,
+   "dur_frames": 640,
    "video_t": 198.045
   },
   {
    "idx": 16,
-   "start": 227.52,
-   "end": 236.64,
-   "dur_frames": 456,
+   "start": 189.615,
+   "end": 197.215,
+   "dur_frames": 380,
    "video_t": 210.368
   },
   {
    "idx": 17,
-   "start": 236.64,
-   "end": 252.0,
-   "dur_frames": 768,
+   "start": 197.215,
+   "end": 210.016,
+   "dur_frames": 640,
    "video_t": 220.411
   },
   {
    "idx": 18,
-   "start": 252.0,
-   "end": 260.5,
-   "dur_frames": 425,
+   "start": 210.016,
+   "end": 217.1,
+   "dur_frames": 354,
    "video_t": 232.564
   }
  ]

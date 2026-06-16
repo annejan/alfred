@@ -14,8 +14,8 @@
         .byte 'P', $40, $47    // screen + colour stage
         .byte 'P', $60, $7f    // bitmap
         .byte 'P', $48, $49    // sprite shape block
-        .byte 'P', $0c, $0e    // resident lyric engine
-        .byte 'P', $2a, $3f    // resident sprite shapes + onsets
+        .byte 'P', $0c, $0f    // resident lyric engine
+        .byte 'P', $31, $3f    // resident sprite shapes
         .byte 'P', $c0, $cf    // resident sprite-shape overflow
         .byte 'M', $00, $0c    // install wrapper PLAY=$0c00
         .byte $00

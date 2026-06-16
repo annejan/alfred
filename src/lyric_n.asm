@@ -1,1 +1,1 @@
-.const LYRIC_NLINES = 38
+.const LYRIC_NLINES = 41

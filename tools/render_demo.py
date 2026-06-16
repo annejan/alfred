@@ -9,7 +9,7 @@ import numpy as np
 from PIL import Image
 
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__))); os.chdir(ROOT)
-FPS=50; SONG=295.5; NF=int(SONG*FPS)
+FPS=50; SONG=217.1; NF=int(SONG*FPS)
 BORDER=24
 W,H=320+2*BORDER, 200+2*BORDER          # 368 x 248 (1x)
 
@@ -53,7 +53,7 @@ def koala_at(f):
 ff=subprocess.Popen(["ffmpeg","-y","-f","rawvideo","-pix_fmt","rgb24","-s",f"{W}x{H}",
     "-r",str(FPS),"-i","-","-i","/tmp/hb.wav","-vf","scale=iw*2:ih*2:flags=neighbor",
     "-c:v","libx264","-crf","18","-pix_fmt","yuv420p","-c:a","aac","-b:a","192k",
-    "-t",str(SONG),"-shortest","/home/annejan/Videos/human_behaviour_c64.mp4"],
+    "-t",str(SONG),"-shortest","/home/annejan/Videos/saturday_night_c64.mp4"],
     stdin=subprocess.PIPE)
 
 cursor=0;last=-1;slide=0
@@ -75,4 +75,4 @@ for f in range(NF):
     ff.stdin.write(frame.tobytes())
     if f%2000==0: print(f"{f}/{NF}")
 ff.stdin.close(); ff.wait()
-print("done -> ~/Videos/human_behaviour_c64.mp4")
+print("done -> ~/Videos/saturday_night_c64.mp4")

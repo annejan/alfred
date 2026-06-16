@@ -187,8 +187,8 @@ def main():
         mtag = "        .byte 'M', $00, $0c    // install wrapper PLAY=$0c00\n" if i == 0 else ""
         # resident lyric engine + sprite data: part0 establishes ('P'), others inherit ('I')
         rt = 'P' if i == 0 else 'I'
-        restag = (f"        .byte '{rt}', $0c, $0e    // resident lyric engine\n"
-                  f"        .byte '{rt}', $2a, $3f    // resident sprite shapes + onsets\n"
+        restag = (f"        .byte '{rt}', $0c, $0f    // resident lyric engine\n"
+                  f"        .byte '{rt}', $31, $3f    // resident sprite shapes\n"
                   f"        .byte '{rt}', $c0, $cf    // resident sprite-shape overflow\n")
         sb = (0x48, 0x49) if i % 2 == 0 else (0x88, 0x89)
         sprtag = f"        .byte 'P', ${sb[0]:02x}, ${sb[1]:02x}    // sprite shape block\n"
@@ -245,8 +245,8 @@ def main():
         # resident chunk: SID + lyric engine + precomputed sprite shapes
         # (lines 0-27 at $2a00, overflow 28+ at $c000) + onset table.
         music = (' --music saturday_night.sid,,7c out/lyriceng.bin,0c00'
-                 ' out/lyric_spr.bin,2a00,0,1500 out/lyric_spr.bin,c000,1500'
-                 ' out/lyric_onset.bin,3f00') if i == 0 else ''
+                 ' out/lyric_spr.bin,3100,0,f00 out/lyric_spr.bin,c000,f00'
+                 ' out/lyric_onset.bin,0f00') if i == 0 else ''
         bl.append(f'"$MKPEF" -o parts_pef/p{nn}.pef src/p{nn}.efo {data}{music}')
     bl += [
         'echo ">>> linking with pefchain"',
