@@ -9,7 +9,7 @@ import numpy as np
 from PIL import Image
 
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__))); os.chdir(ROOT)
-FPS=50; SONG=217.1; NF=int(SONG*FPS)
+FPS=50; SONG=210.0; NF=int(SONG*FPS)
 BORDER=24
 W,H=320+2*BORDER, 200+2*BORDER          # 368 x 248 (1x)
 
@@ -51,7 +51,7 @@ def koala_at(f):
     return koala[-1][2]
 
 ff=subprocess.Popen(["ffmpeg","-y","-f","rawvideo","-pix_fmt","rgb24","-s",f"{W}x{H}",
-    "-r",str(FPS),"-i","-","-i","/tmp/hb.wav","-vf","scale=iw*2:ih*2:flags=neighbor",
+    "-r",str(FPS),"-i","-","-i","saturday_night.mp3","-vf","scale=iw*2:ih*2:flags=neighbor",
     "-c:v","libx264","-crf","18","-pix_fmt","yuv420p","-c:a","aac","-b:a","192k",
     "-t",str(SONG),"-shortest","/home/annejan/Videos/saturday_night_c64.mp4"],
     stdin=subprocess.PIPE)
