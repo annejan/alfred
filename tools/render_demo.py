@@ -63,15 +63,15 @@ for f in range(NF):
     frame=koala_at(f).copy()
     SI,LX,LR=LINEPX[cursor]
     if len(SI):
-        anim=f&255
+        anim=(f*3)&255
         spy=(200+int(SINE[anim])+slide)-50+BORDER       # sprite top (image space)
         X=(SPRXA[SI]-24)+BORDER+LX
         Y=spy+7+LR
-        base=(anim>>2)&3
+        base=(anim>>3)&3
         cols=np.array([PAL[COLPAL[(base+s)&3]] for s in range(8)],dtype=np.uint8)
         m=(Y>=0)&(Y<H)&(X>=0)&(X<W)
         frame[Y[m],X[m]]=cols[SI[m]]
-    if slide>0: slide=max(0,slide-3)
+    if slide>0: slide=max(0,slide-4)
     ff.stdin.write(frame.tobytes())
     if f%2000==0: print(f"{f}/{NF}")
 ff.stdin.close(); ff.wait()

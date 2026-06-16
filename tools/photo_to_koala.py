@@ -127,9 +127,11 @@ def main():
     ap.add_argument('--bg', type=int, default=-1)
     ap.add_argument('--contrast', type=float, default=1.0)
     ap.add_argument('--sat', type=float, default=1.0)
+    ap.add_argument('--bright', type=float, default=1.0)
     a = ap.parse_args()
 
     im = Image.open(a.inp).convert('RGB')
+    if a.bright != 1.0:   im = ImageEnhance.Brightness(im).enhance(a.bright)
     if a.contrast != 1.0: im = ImageEnhance.Contrast(im).enhance(a.contrast)
     if a.sat != 1.0:      im = ImageEnhance.Color(im).enhance(a.sat)
     im = im.resize((160, 200), Image.LANCZOS)   # 160 logical wide, 200 tall

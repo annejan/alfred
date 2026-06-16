@@ -93,11 +93,14 @@ ic:
 
 // per-frame: sine bob + slide-in (Y only) + colour shimmer. X is fixed (setup).
 animate:
-        inc ANIM
+        lda ANIM
+        clc
+        adc #3                 // faster bob/shimmer for up-tempo songs
+        sta ANIM
         lda SLIDE
         beq an_y
         sec
-        sbc #3
+        sbc #4                 // snappier slide-in
         bcs an_sl
         lda #0
 an_sl:
@@ -126,8 +129,9 @@ an_yl:
         inx
         cpx #8
         bne an_yl
-        // colour shimmer: rotating bright palette across the 8 sprites
+        // colour shimmer: rotating palette across the 8 sprites
         lda ANIM
+        lsr
         lsr
         lsr
         and #3
