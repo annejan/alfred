@@ -3,7 +3,7 @@
 .const SCREEN = $4000
 .const COLDAT = $4400
 .const BG     = $0
-.const HOLD   = 695
+.const HOLD   = 610
 .const T_LO = $02      // 16-bit hold timer (loader uses pages $02/$03, NOT zp)
 .const T_HI = $03
 .const FLAG = $04      // advance flag, script waits FLAG==1

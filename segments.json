@@ -2,168 +2,168 @@
  "bpm": 93.75,
  "beat": 0.64,
  "phase": 0.0,
- "song_len": 295.5,
+ "song_len": 259.2,
  "video_len": 255.05,
  "segments": [
   {
    "idx": 0,
    "start": 0.0,
-   "end": 12.16,
-   "dur_frames": 608,
+   "end": 10.666,
+   "dur_frames": 533,
    "video_t": 3.149
   },
   {
    "idx": 1,
-   "start": 12.16,
-   "end": 27.52,
-   "dur_frames": 768,
+   "start": 10.666,
+   "end": 24.139,
+   "dur_frames": 674,
    "video_t": 14.473
   },
   {
    "idx": 2,
-   "start": 27.52,
-   "end": 42.88,
-   "dur_frames": 768,
+   "start": 24.139,
+   "end": 37.613,
+   "dur_frames": 674,
    "video_t": 27.73
   },
   {
    "idx": 3,
-   "start": 42.88,
-   "end": 58.24,
-   "dur_frames": 768,
+   "start": 37.613,
+   "end": 51.086,
+   "dur_frames": 674,
    "video_t": 40.988
   },
   {
    "idx": 4,
-   "start": 58.24,
-   "end": 65.92,
-   "dur_frames": 384,
+   "start": 51.086,
+   "end": 57.822,
+   "dur_frames": 337,
    "video_t": 52.256
   },
   {
    "idx": 5,
-   "start": 65.92,
-   "end": 72.96,
-   "dur_frames": 352,
+   "start": 57.822,
+   "end": 63.997,
+   "dur_frames": 309,
    "video_t": 58.719
   },
   {
    "idx": 6,
-   "start": 72.96,
-   "end": 86.4,
-   "dur_frames": 672,
+   "start": 63.997,
+   "end": 75.786,
+   "dur_frames": 589,
    "video_t": 66.453
   },
   {
    "idx": 7,
-   "start": 86.4,
-   "end": 99.84,
-   "dur_frames": 672,
+   "start": 75.786,
+   "end": 87.575,
+   "dur_frames": 589,
    "video_t": 78.053
   },
   {
    "idx": 8,
-   "start": 99.84,
-   "end": 113.28,
-   "dur_frames": 672,
+   "start": 87.575,
+   "end": 99.364,
+   "dur_frames": 589,
    "video_t": 89.653
   },
   {
    "idx": 9,
-   "start": 113.28,
-   "end": 126.72,
-   "dur_frames": 672,
+   "start": 99.364,
+   "end": 111.153,
+   "dur_frames": 589,
    "video_t": 101.254
   },
   {
    "idx": 10,
-   "start": 126.72,
-   "end": 147.2,
-   "dur_frames": 1024,
+   "start": 111.153,
+   "end": 129.118,
+   "dur_frames": 898,
    "video_t": 114.677
   },
   {
    "idx": 11,
-   "start": 147.2,
-   "end": 160.0,
-   "dur_frames": 640,
+   "start": 129.118,
+   "end": 140.345,
+   "dur_frames": 561,
    "video_t": 130.365
   },
   {
    "idx": 12,
-   "start": 160.0,
-   "end": 173.44,
-   "dur_frames": 672,
+   "start": 140.345,
+   "end": 152.134,
+   "dur_frames": 589,
    "video_t": 141.578
   },
   {
    "idx": 13,
-   "start": 173.44,
-   "end": 186.24,
-   "dur_frames": 640,
+   "start": 152.134,
+   "end": 163.362,
+   "dur_frames": 561,
    "video_t": 153.013
   },
   {
    "idx": 14,
-   "start": 186.24,
-   "end": 197.76,
-   "dur_frames": 576,
+   "start": 163.362,
+   "end": 173.467,
+   "dur_frames": 505,
    "video_t": 163.729
   },
   {
    "idx": 15,
-   "start": 197.76,
-   "end": 215.04,
-   "dur_frames": 864,
+   "start": 173.467,
+   "end": 188.624,
+   "dur_frames": 758,
    "video_t": 175.164
   },
   {
    "idx": 16,
-   "start": 215.04,
-   "end": 221.44,
-   "dur_frames": 320,
+   "start": 188.624,
+   "end": 194.238,
+   "dur_frames": 281,
    "video_t": 187.261
   },
   {
    "idx": 17,
-   "start": 221.44,
-   "end": 229.12,
-   "dur_frames": 384,
+   "start": 194.238,
+   "end": 200.974,
+   "dur_frames": 337,
    "video_t": 193.116
   },
   {
    "idx": 18,
-   "start": 229.12,
-   "end": 247.68,
-   "dur_frames": 928,
+   "start": 200.974,
+   "end": 217.254,
+   "dur_frames": 814,
    "video_t": 202.562
   },
   {
    "idx": 19,
-   "start": 247.68,
-   "end": 261.76,
-   "dur_frames": 704,
+   "start": 217.254,
+   "end": 229.605,
+   "dur_frames": 618,
    "video_t": 217.422
   },
   {
    "idx": 20,
-   "start": 261.76,
-   "end": 275.2,
-   "dur_frames": 672,
+   "start": 229.605,
+   "end": 241.394,
+   "dur_frames": 589,
    "video_t": 229.409
   },
   {
    "idx": 21,
-   "start": 275.2,
-   "end": 281.6,
-   "dur_frames": 320,
+   "start": 241.394,
+   "end": 247.008,
+   "dur_frames": 281,
    "video_t": 239.186
   },
   {
    "idx": 22,
-   "start": 281.6,
-   "end": 295.5,
-   "dur_frames": 695,
+   "start": 247.008,
+   "end": 259.2,
+   "dur_frames": 610,
    "video_t": 246.652
   }
  ]
