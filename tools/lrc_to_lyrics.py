@@ -23,6 +23,7 @@ ABBR = {
  "YOU KNOW I'LL TAKE YOU TO THE TOP": "I'LL TAKE YOU TO THE TOP",
  "IT'S PARTY TIME AND NOT ONE MINUTE WE CAN LOSE": None,
  "DA BA DA DAM DEE DEE DEE DA DEE DA DA DAM": "DA BA DA DAM DEE DEE",
+ "SATURDAY NIGHT SATURDAY NIGHT": "SATURDAY NIGHT",   # no lone "NIGHT" orphan
 }
 def clean(s):
     s=re.sub(r'\(.*?\)','',s).replace(',','').upper().strip()
@@ -32,7 +33,10 @@ def fit(s):
     if s in ABBR and ABBR[s]: return [ABBR[s]]
     if len(s)<=MAXC: return [s]
     cut=s.rfind(' ',0,MAXC+1)
-    return [s[:cut], s[cut+1:]] if cut>0 else [s[:MAXC]]
+    if cut<=0: return [s[:MAXC]]
+    a,b=s[:cut],s[cut+1:]
+    if len(b)<=4: return [a]          # drop tiny orphan tails (e.g. lone "NIGHT")
+    return [a,b]
 
 ent=[]
 for l in open(LRC,encoding='utf-8'):
