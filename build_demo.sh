@@ -11,7 +11,7 @@ python3 tools/lyric_assets.py >/dev/null || { echo "lyric_assets FAIL"; exit 1; 
 java -jar "$KA" src/lyriceng.asm -o out/lyriceng.prg >/tmp/kae.log 2>&1 \
   || { echo "lyriceng build FAIL"; tail -8 /tmp/kae.log; exit 1; }
 tail -c +3 out/lyriceng.prg > out/lyriceng.bin
-for nn in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18; do
+for nn in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22; do
   ( cd src
     java -jar "$KA" p$nn.asm -o p$nn.prg -symbolfile >/tmp/ka.log 2>&1 \
       || { echo "KA p$nn FAIL"; tail -8 /tmp/ka.log; exit 1; }
@@ -19,7 +19,7 @@ for nn in 00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18; do
       || { echo "EFO p$nn FAIL"; tail -8 /tmp/ka2.log; exit 1; }
     cat p${nn}_efo.bin p$nn.prg > p$nn.efo )
 done
-"$MKPEF" -o parts_pef/p00.pef src/p00.efo koala/img00.kla,6000,2,1f40 koala/img00.kla,4000,1f42,3e8 koala/img00.kla,4400,232a,3e8 --music saturday_night.sid,,7c out/lyriceng.bin,0c00 out/lyric_font.bin,3100 out/lyric_uniq.bin,3300 out/lyric_order.bin,3600 out/lyric_onset.bin,3680
+"$MKPEF" -o parts_pef/p00.pef src/p00.efo koala/img00.kla,6000,2,1f40 koala/img00.kla,4000,1f42,3e8 koala/img00.kla,4400,232a,3e8 --music human_behaviour.sid,,7c out/lyriceng.bin,0c00 out/lyric_font.bin,3100 out/lyric_uniq.bin,3300 out/lyric_order.bin,3600 out/lyric_onset.bin,3680
 "$MKPEF" -o parts_pef/p01.pef src/p01.efo koala/img01.kla,a000,2,1f40 koala/img01.kla,8000,1f42,3e8 koala/img01.kla,8400,232a,3e8
 "$MKPEF" -o parts_pef/p02.pef src/p02.efo koala/img02.kla,6000,2,1f40 koala/img02.kla,4000,1f42,3e8 koala/img02.kla,4400,232a,3e8
 "$MKPEF" -o parts_pef/p03.pef src/p03.efo koala/img03.kla,a000,2,1f40 koala/img03.kla,8000,1f42,3e8 koala/img03.kla,8400,232a,3e8
@@ -38,6 +38,10 @@ done
 "$MKPEF" -o parts_pef/p16.pef src/p16.efo koala/img16.kla,6000,2,1f40 koala/img16.kla,4000,1f42,3e8 koala/img16.kla,4400,232a,3e8
 "$MKPEF" -o parts_pef/p17.pef src/p17.efo koala/img17.kla,a000,2,1f40 koala/img17.kla,8000,1f42,3e8 koala/img17.kla,8400,232a,3e8
 "$MKPEF" -o parts_pef/p18.pef src/p18.efo koala/img18.kla,6000,2,1f40 koala/img18.kla,4000,1f42,3e8 koala/img18.kla,4400,232a,3e8
+"$MKPEF" -o parts_pef/p19.pef src/p19.efo koala/img19.kla,a000,2,1f40 koala/img19.kla,8000,1f42,3e8 koala/img19.kla,8400,232a,3e8
+"$MKPEF" -o parts_pef/p20.pef src/p20.efo koala/img20.kla,6000,2,1f40 koala/img20.kla,4000,1f42,3e8 koala/img20.kla,4400,232a,3e8
+"$MKPEF" -o parts_pef/p21.pef src/p21.efo koala/img21.kla,a000,2,1f40 koala/img21.kla,8000,1f42,3e8 koala/img21.kla,8400,232a,3e8
+"$MKPEF" -o parts_pef/p22.pef src/p22.efo koala/img22.kla,6000,2,1f40 koala/img22.kla,4000,1f42,3e8 koala/img22.kla,4400,232a,3e8
 echo ">>> linking with pefchain"
-"$PEFCHAIN" -v --title "saturday/whig" --disk-id "SN" --loop 0 -o out/human.d64 script_demo
+"$PEFCHAIN" -v --title "human/bjork" --disk-id "HB" --loop 0 -o out/human.d64 script_demo
 ls -l out/human.d64

@@ -25,6 +25,12 @@ def sc(ch):
 def codes(txt):
     c=[sc(ch) for ch in txt.upper()[:24]]; return bytes(c+[32]*(24-len(c)))
 
+# per-clip lyric-sprite colour pulse ramp (5 C64 colours, trough->peak).
+# Default = darker (Saturday); brighter clips set "faderamp" in clip.json.
+fade=json.load(open('clip.json')).get('faderamp',[0,6,11,4,12])
+open('src/lyric_fade.asm','w').write(
+    "faderamp: .byte "+",".join(str(int(c)&15) for c in fade)+"\n")
+
 d=json.load(open('lyrics.json'))['lines']
 uniq=[]; idx={}; order=bytearray(); onset=bytearray()
 for t,txt in d:

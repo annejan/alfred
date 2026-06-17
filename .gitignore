@@ -11,3 +11,9 @@ parts_pef/
 out/
 __pycache__/
 cand/
+# Active-clip working symlinks (authoritative copies live in clips/<name>/)
+/clip.json
+/segments.json
+/lyrics.json
+/picks.json
+/koala

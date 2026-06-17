@@ -1,0 +1,17 @@
+{
+  "name": "human_behaviour",
+  "video": "björk ： human behaviour (HD) [p0mRIhK9seg].webm",
+  "sid": "human_behaviour.sid",
+  "mp3": "human_behaviour.mp3",
+  "lrc": "",
+  "title": "human/bjork",
+  "disk_id": "HB",
+  "beat": 0.64,
+  "song_len": 259.2,
+  "video_len": 255.05,
+  "render_len": 259.2,
+  "ratio": 1.0,
+  "faderamp": [6, 4, 14, 3, 1],
+  "abbr": {},
+  "build": null
+}
