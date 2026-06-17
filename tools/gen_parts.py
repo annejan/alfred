@@ -15,7 +15,7 @@ call_play placeholder auto-patched to jsr PLAY by pefchain.
 
 Emits src/pNN.asm, src/pNN_efo.asm, build_demo.sh, script_demo.
 """
-import os, sys, json
+import os, json
 
 INIT = 0x1000
 PLAY = 0x1003

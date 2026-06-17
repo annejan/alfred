@@ -1,5 +1,7 @@
 # Alfred — a director for C64 music-video demos
 
+[![CI](https://github.com/annejan/alfred/actions/workflows/ci.yml/badge.svg)](https://github.com/annejan/alfred/actions/workflows/ci.yml)
+
 > Named for Alfred Hitchcock: hand it a music video and it directs the whole
 > production onto a Commodore 64.
 
@@ -76,6 +78,20 @@ are in [`docs/LESSONS.md`](docs/LESSONS.md).
   repetitive choruses cost no extra RAM. Lines pulse dark→light and bob.
 - **Timing**: each part counts down its section length and raises an advance
   flag; the pefchain script waits on it, so cuts land on song transitions.
+
+## Development
+
+```sh
+python3 -m venv --system-site-packages .venv && . .venv/bin/activate
+pip install -e ".[dev]"        # ruff + pytest (build tools need numpy + pillow)
+ruff check tools tests
+pytest
+```
+
+Unit tests cover the pure logic (lyric `clean`/`fit`/`build_lyrics`, koala
+`encode_koala`, every `clips/*/clip.json`); CI runs ruff + pytest on
+3.9/3.11/3.13. Build tools keep their file I/O under `main()` so the helpers
+stay importable/testable. See [`AGENTS.md`](AGENTS.md).
 
 ## Related
 

@@ -122,7 +122,7 @@ def main():
     print(f"  [{len(cand)} candidate peaks; top strengths: "
           f"{', '.join(f'{s:.2f}@{t:.0f}s' for s,t in cand[:12])}]", file=sys.stderr)
     bounds=[]
-    for strength,t in cand:
+    for _strength,t in cand:
         if t<mind or t>dur-mind: continue
         if all(abs(t-b)>=mind for b in bounds): bounds.append(t)
         if len(bounds)>=a.n-1: break

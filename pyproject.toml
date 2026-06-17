@@ -1,0 +1,41 @@
+# Alfred — config-driven C64 music-video demo builder.
+# The dev tools below are only for lint/test/CI; the build tools need numpy +
+# Pillow (koala dithering / deterministic render).
+
+[project]
+name = "alfred"
+version = "0.1.0"
+description = "Config-driven, multi-clip C64 (Spindle) music-video trackmo builder"
+requires-python = ">=3.9"
+dependencies = ["numpy", "pillow"]
+
+[project.optional-dependencies]
+dev = ["ruff", "pytest"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+# Catch real bugs (pyflakes, bugbear, simplify, pyupgrade) but keep the dense,
+# multi-statement-per-line house style the build tools are written in — the
+# E7xx / E401 / E501 rules would fight ~hundreds of hand-packed lines on purpose.
+select = ["F", "E", "W", "B", "SIM", "UP"]
+ignore = [
+    "E701",  # multiple statements on one line (colon)    — intentional
+    "E702",  # multiple statements on one line (semicolon) — intentional
+    "E703",  # statement ends with a semicolon             — intentional
+    "E401",  # multiple imports on one line                — intentional
+    "E501",  # line too long                               — prose/print lines
+    "E741",  # ambiguous variable name (l/o)               — pixel/byte loops
+    "B905",  # zip() without strict=                       — py39 target
+    "SIM105",# contextlib.suppress                         — explicit try is clearer
+    "SIM115",# open() without context manager              — one-shot scripts, intentional
+    "SIM108",# if-else instead of ternary                  — readability, intentional
+    "E731",  # lambda assignment                           — local helper, intentional
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tools"]       # import the build tools as modules
+addopts = "-q"

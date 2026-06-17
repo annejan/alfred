@@ -19,7 +19,7 @@ Usage:
   photo_to_koala.py in.png out.kla [--preview out.png] [--no-dither]
                                    [--bg N] [--contrast f] [--sat f]
 """
-import sys, argparse
+import argparse
 import numpy as np
 from PIL import Image, ImageEnhance
 
@@ -43,8 +43,7 @@ def pick_cell_palettes(img160, bg):
     bg, minimise squared error over the cell's 32 pixels.
 
     Returns cellcols[25,40,3] of palette indices (the %01,%10,%11 colours)."""
-    H, W = 200, 160
-    # squared distance from every pixel to every palette colour: [H,W,16]
+    # squared distance from every pixel to every palette colour: [200,160,16]
     diff = img160[:, :, None, :] - PALETTE[None, None, :, :]
     d2 = np.einsum('hwpc,hwpc->hwp', diff, diff)  # [H,W,16]
     bgd = d2[:, :, bg]                            # error if pixel -> bg

@@ -112,3 +112,42 @@ capture flakiness. Pixel-faithful minus the authentic VICE border/scanlines.
 - **Everything per-clip is in `clip.json`** (video/sid/mp3/lrc/title/beat/
   song_len/ratio/abbr/build). A new clip = drop files + edit clip.json + run.
   See `docs/NEWCLIP.md`.
+
+## Multi-clip + engine v3 (Björk → … → Go West)
+
+- **Multi-clip layout.** Each clip is `clips/<name>/` (config + curated json +
+  koala + source media + README). `tools/use_clip.sh <name>` repoints the
+  repo-root working symlinks; every tool reads the root. Always symlink the
+  json *before* they exist, or a fresh clip's `segment.py`/`lrc_to_lyrics.py`
+  output strands a real file at the gitignored root instead of writing through.
+- **Per-clip d64.** `out/<name>.d64`, not a shared `out/human.d64`, or one
+  clip's build clobbers another's disk image.
+- **Generated source is not tracked.** Only `src/lyriceng.asm` is hand-written;
+  `src/pNN*.asm`, `lyric_n.asm`, `lyric_fade.asm` (and `build_demo.sh`,
+  `script_demo`) are emitted per clip and gitignored — otherwise stale parts
+  (a 23-part clip's `p16`-`p22`) linger after a 16-part build.
+- **Universal 4:3 crop.** `gen_candidates`/koala extraction must crop to the
+  largest 4:3 region that *fits* (`crop=min(iw,ih*4/3):min(ih,iw*3/4)`); the old
+  16:9-assuming crop produced an invalid (too-wide) rect on a 5:4 source (GALA).
+- **Recursive word-wrap.** A real LRC crams several phrases on one timestamped
+  line ("My love has got no money He's got his strong beliefs"). `fit()` must
+  wrap *recursively* (and apply `abbr` per chunk), else the tail stays >24 and
+  gets truncated on the 24-char sprite row.
+- **LRC timing = `ratio` × t + `lrc_offset`.** A supplied "official" LRC can be
+  a few seconds off the SID render. Two reference points from the user ("come
+  on" 0:32, "Together" 0:34) pin a constant `lrc_offset` (Go West: -4.5s).
+- **Call-and-response colour.** `keep_parens` keeps the `(...)` choir words and
+  flags them; the engine renders choir lines with `faderamp2` and lead lines
+  with `faderamp` via a per-line `STYLE` table + a `FADEPTR` (Go West: lead
+  blue, choir red). Make a hue read regardless of pulse phase by keeping the
+  ramp in-hue (`[0,6,6,14,14]` blue, `[0,2,2,10,10]` red) — a ramp through
+  cyan/yellow/white reads as the wrong colour at its peak frame.
+- **Resident lyric layout has a ceiling.** FONT/UNIQ/ORDER/ONSET/STYLE all live
+  in `$3100-$3fff` (below the VIC banks at `$4000+`), so capacity is bounded:
+  `24*NUNIQ + 4*NLINES` must fit ~3328 bytes. Current map (UNIQ `$3300`, ORDER
+  `$3b00`, ONSET `$3c00`, STYLE `$3e00`) holds ~85 unique / ~150 lines. The
+  residency tag `'P'/'I' $31,$3f` must cover all of it.
+- **Tests + CI.** Pure logic (lyric `clean`/`fit`/`build_lyrics`, koala
+  `encode_koala`, clip.json schema) is unit-tested (`tests/`, `pytest`); GitHub
+  Actions runs `ruff` + `pytest` on 3.9/3.11/3.13. Keep build tools importable
+  (side-effects under `main()`/`__main__`) so they can be tested.

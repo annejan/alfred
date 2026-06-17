@@ -2,7 +2,7 @@
 """Per slot, extract K candidate frames across the slot's video window and
 dither each to a C64 koala PREVIEW png, so vision agents rank the actual
 on-screen result. Writes cand/sNN_kKK.png + cand/manifest.json."""
-import json, os, subprocess, tempfile
+import json, os, subprocess
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(ROOT)
 VID=json.load(open(os.path.join(ROOT,'clip.json')))['video']
@@ -17,7 +17,7 @@ for s in segs:
     cands=[]
     for k in range(K):
         t=vt0+(vt1-vt0)*k/(K-1)
-        raw=f"/tmp/cr.png"
+        raw="/tmp/cr.png"
         # crop to the largest 4:3 region that fits (robust to any source AR:
         # 16:9 -> pillar, 5:4 -> letterbox), then scale to the C64 320x200.
         subprocess.run(["ffmpeg","-y","-ss",f"{t:.2f}","-i",VID,"-frames:v","1",
