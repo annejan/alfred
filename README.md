@@ -23,7 +23,7 @@ repoints the root working symlinks at a clip and you build it. Three clips:
 |------|------|-----|--------|
 | Björk — *Human Behaviour* | `human_behaviour.sid` (4:19) | [`clips/bjork/`](clips/bjork/) | done |
 | Whigfield — *Saturday Night* | `saturday_night.sid` (3:37) | [`clips/saturday/`](clips/saturday/) | done |
-| GALA — *Freed from Desire* | `freed-from-desire.sid` (~3:17) | [`clips/freed/`](clips/freed/) | staged |
+| GALA — *Freed from Desire* | `freed-from-desire.sid` (~3:17) | [`clips/freed/`](clips/freed/) | done |
 
 Renders land in `~/Videos/<name>_c64.mp4`; the disk image in `out/<name>.d64`.
 
