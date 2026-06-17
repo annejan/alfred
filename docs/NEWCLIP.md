@@ -1,69 +1,69 @@
-# Making a demo for another video clip
+# Making a demo for another video clip (config-driven)
 
-The pipeline (video → koala slideshow on song transitions + lyric sprites →
-Spindle d64 → capture) is reusable. It's currently tuned to Björk; below are
-the per-clip knobs and the step order. Copy this repo per clip, or branch.
+The pipeline is driven by **`clip.json`** — a new clip = drop the inputs, edit
+`clip.json`, run the steps. Work on a branch per clip (master=Björk,
+`saturday`=Whigfield, …). All tools read `clip.json`; no tool edits needed.
 
-## Inputs you need
+## 1. Drop inputs in the repo root
 
-1. **A SID** of the song (`human_behaviour.sid` slot). PSID, played 50Hz.
-2. **The music video** (`.webm`/`.mp4`).
-3. **Optional: a timed `.lrc`** for accurate lyric timing. Without it, derive
-   onsets from a MIDI vocal track or place them by hand.
+- the music video (`.webm`/`.mp4`)
+- the SID (`*.sid`, PSID, init $1000 / play $1003)
+- a mastered MP3 of the SID render (loudnorm) — used as the render's audio
+- a timed `.lrc`
 
-## Per-clip knobs (the hardcoded bits to change)
+## 2. Fill in `clip.json`
 
-| file | what to change |
-|------|----------------|
-| `tools/extract_segments.py`, `tools/gen_candidates.py` | `VID = "..."` — the video filename |
-| `tools/segment.py` | the **beat** (currently `bpm,beat,phase = 93.75,0.64,0` — set from the song's BPM) and CLI args `video_len song_len` |
-| `tools/lrc_to_lyrics.py` | `LRC` path; the **anchor** `V0_LRC,S0_SID` (first-vocal time in LRC vs in the SID) and `RATIO` (SID-vocal-span ÷ LRC-vocal-span) |
-| `tools/render_demo.py` | `SONG` length (or read it from `segments.json`) |
-| `tools/gen_parts.py` | the `--music <sid>,,7c` filename, the pefchain `--title`/`--disk-id` |
-| capture | window geometry (`wmctrl -lG`), the audio sink monitor (`pactl list sink-inputs` → VICE's sink → `.monitor`) |
-
-Generic (no change needed): `photo_to_koala.py` (16-col palette), `gen_parts.py`
-memory map / Spindle wiring, `lyric_assets.py`, `lyriceng.asm`. Lyric lines
-must be **≤24 chars**; ≤49 lines (region1 `$2a00` + overflow `$c000`).
-
-## Step order (the load-bearing sequence)
-
-```sh
-# 0. find the song length (SID has no length metadata): render long, autocorrelate
-sidplayfp -w/tmp/x.wav -t560 -q song.sid
-#    -> detect loop period = song_len (see the autocorr snippet in git history)
-
-# 1. detect song sections -> image cut points
-python3 tools/segment.py /tmp/x.wav <video_len> <song_len> --n 16 --target 14 --out segments.json
-
-# 2. dithered candidate frames per section
-python3 tools/gen_candidates.py
-
-# 3. CURATE: pick the best candidate per slot (vision agents or by hand) ->
-#    apply picks -> koala/imgNN.kla  (see git history for the picks workflow)
-
-# 4. lyrics -> lyrics.json (<=24 chars/line, monotonic onsets)
-python3 tools/lrc_to_lyrics.py
-
-# 5. GENERATE PARTS, then build (ORDER MATTERS)
-python3 tools/gen_parts.py      # regenerates src/pNN.asm + build_demo.sh + script_demo
-bash build_demo.sh              # assembles parts + lyric engine, links the d64
-
-# 6. capture (VICE) or offline render
-python3 tools/render_demo.py    # deterministic MP4, no capture flakiness
+```json
+{
+  "name": "saturday_night",          // output: ~/Videos/<name>_c64.mp4
+  "video": "….webm", "sid": "….sid", "mp3": "….mp3", "lrc": "….lrc",
+  "title": "disk/name", "disk_id": "XX",   // pefchain disk dir
+  "beat": 0.48,                       // 60/BPM — for segment beat-snapping
+  "song_len": 217.1,                  // SID loop length (autocorr, see below)
+  "video_len": 238.0,                 // ffprobe the webm
+  "render_len": 218.0,                // mp3 duration (ffprobe)
+  "ratio": 1.0,                       // LRC->SID time scale (see LESSONS)
+  "abbr": { "LONG LINE …": "SHORTER", "SPLIT ME": null },  // null => word-split
+  "build": { "match":"X X", "seq":["X","X X"], "resolve":"X" }  // optional chorus build, or omit
+}
 ```
 
-**CRITICAL:** `build_demo.sh` only *assembles* the existing `src/pNN.asm`. After
-editing `segments.json` (or any per-part value) you MUST re-run
-`tools/gen_parts.py` first, or the parts keep stale timing. (This bit us on the
-107 BPM rescale — see `docs/LESSONS.md`.)
+Detect `song_len` (SID has no length metadata):
+```sh
+sidplayfp -w/tmp/s.wav -t560 -q clip.sid    # then loop-autocorrelate the
+# energy envelope @50Hz in the 100-330s band -> peak lag = song_len
+```
 
-## Tempo change shortcut
+## 3. Run the pipeline (from repo root)
 
-If you only re-render the SID at a different tempo (same song), don't redo
-segments/curation — just rescale by the ratio `new_len/old_len`:
-multiply every `segments.json` start/end (recompute `dur_frames`) and every
-`lyrics.json` onset, then `gen_parts.py` + `build_demo.sh`.
+```sh
+python3 tools/segment.py /tmp/s.wav <video_len> <song_len> --n 16 --target 14 --out segments.json
+python3 tools/gen_candidates.py            # 8 dithered koala candidates per slot
+#   CURATE: a vision-agent workflow ranks the candidates per slot (see git
+#   history: curate-* workflow) -> apply picks -> koala/imgNN.kla + picks.json
+python3 tools/lrc_to_lyrics.py             # LRC -> lyrics.json (abbr/build/gaps applied)
+python3 tools/lyric_assets.py              # font + uniq + order + onset + src/lyric_n.asm
+python3 tools/gen_parts.py                 # regenerates src/pNN*.asm + build_demo.sh + script_demo
+bash build_demo.sh                         # assembles parts + lyric engine -> out/human.d64
+python3 tools/render_demo.py               # deterministic MP4 -> ~/Videos/<name>_c64.mp4
+```
 
-See `docs/LESSONS.md` for the non-obvious traps (VIC bank via `$dd02`, the
-3-byte `call_play` placeholder, no `'Z'` tag, capture focus/throttle/sink, …).
+**Per-LRC iteration loop** (timing/text tweaks): just
+`lrc_to_lyrics → lyric_assets → gen_parts → build_demo → render_demo`.
+
+**CRITICAL:** `build_demo.sh` only *assembles* existing `src/pNN.asm`. After
+editing `segments.json` / `clip.json` you MUST run `tools/gen_parts.py` first,
+or parts keep stale timing/config.
+
+## 4. Watch the lyric RAM budget
+
+Lyric data lives above the SID. If the SID grows past `$3100`, relocate
+FONT/UNIQ/ORDER/ONSET (in `src/lyriceng.asm` + the `--music` line in
+`gen_parts.py`); keep `UNIQ < ORDER < ONSET < $4000`. `lyric_assets.py` prints
+the byte sizes — UNIQ ≤ (ORDER−UNIQ) etc.
+
+## 5. Real VICE capture (optional)
+
+See `docs/LESSONS.md` — focus the window for 50fps, capture the sink monitor
+VICE actually outputs to, start ffmpeg then autostart for the boot/load/run.
+The deterministic `render_demo.py` is the reliable default.

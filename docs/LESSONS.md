@@ -81,3 +81,34 @@ the Spindle wiring, or the capture flow.
 `render_demo.py` composites the koala frames + a faithful replica of the
 lyric-sprite animation + the SID wav into a clean 50fps MP4 in ~26s — no
 capture flakiness. Pixel-faithful minus the authentic VICE border/scanlines.
+
+## Lyric engine v2 (font-render + lookup) — Saturday Night
+
+- **Font-render beats precomputed shapes.** Storing precomputed sprite shapes
+  caps line count (~28-41) by RAM. Instead ship the C64 charset (512B) + a
+  text table and render each line's 8 sprites on a line change → unlimited
+  lines, tiny RAM. The blit fills bank1's sprite block then copies to bank2.
+- **`lda (GP),x` is NOT a valid 6502 mode** — only `(zp),y` and `(zp,x)` exist.
+  KickAss mis-assembled it → sprite noise. Render glyph rows with `(GP),y`
+  (Y=row) and advance the dest pointer by 3 per row.
+- **Repetition = an ORDER table** (onset → unique-line index, like a tracker
+  orderlist). 77 lyric lines → 22 unique + a 77-byte order list. Cheap, scales
+  to any repetitive song.
+- **LRC timing: RATIO=1 when the LRC is already timed to the render/mp3.** Only
+  scale (e.g. studio-BPM/SID-BPM) when the LRC is timed to a *different*
+  recording. Check a known landmark (first sung hook) against the LRC time.
+- **Clear lingering text in instrumental gaps:** if a line is followed by a
+  >4s hole, insert a blank ~3s after it so it doesn't hang the whole break.
+- **Chorus build-up:** a run of a repeated chorus line can be shown as a
+  teasing build ("X" → "X X" → "X NIGHT" …) that resolves to the full line on
+  the last of the run (`build` in clip.json).
+- **Colour pulse, not white-hold.** Holding the lyric colour at white looks
+  flat; pulse the luminance via the sine table (`faderamp`, e.g.
+  black→blue→dkgrey→purple→grey) so the letters breathe dark↔light. A black
+  trough doubles as a fade in/out.
+- **SID size pushes the lyric data.** A bigger SID ($1000-$3005) overlapped the
+  old $2a00 lyric region → mkpef "overlapping files". Lyric data now sits at
+  $3100+ (FONT/UNIQ/ORDER/ONSET); relocate if the SID grows further.
+- **Everything per-clip is in `clip.json`** (video/sid/mp3/lrc/title/beat/
+  song_len/ratio/abbr/build). A new clip = drop files + edit clip.json + run.
+  See `docs/NEWCLIP.md`.

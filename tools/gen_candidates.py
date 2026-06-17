@@ -5,7 +5,7 @@ on-screen result. Writes cand/sNN_kKK.png + cand/manifest.json."""
 import json, os, subprocess, tempfile
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.chdir(ROOT)
-VID="Whigfield - Saturday Night (Official Video) [8DNQRtmIMxk].webm"
+VID=json.load(open(os.path.join(ROOT,'clip.json')))['video']
 K=8
 d=json.load(open('segments.json')); SONG=d['song_len']; VL=d['video_len']; segs=d['segments']
 os.makedirs('cand',exist_ok=True)

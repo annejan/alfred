@@ -10,9 +10,10 @@ import numpy as np
 from PIL import Image
 
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__))); os.chdir(ROOT)
-FPS=50; SONG=218.0; NF=int(SONG*FPS)
+CLIP=json.load(open('clip.json'))
+FPS=50; SONG=CLIP['render_len']; NF=int(SONG*FPS)
 BORDER=24; W,H=320+2*BORDER, 200+2*BORDER
-AUDIO="saturday_night.mp3"
+AUDIO=CLIP['mp3']; OUTNAME=CLIP['name']
 
 PEPTO=[(0,0,0),(255,255,255),(136,57,57),(103,182,189),(139,79,171),(80,175,75),
 (64,64,173),(199,196,126),(139,95,41),(87,66,0),(191,116,116),(86,86,86),
@@ -56,7 +57,7 @@ SPRXA=np.array(SPRX)
 ff=subprocess.Popen(["ffmpeg","-y","-f","rawvideo","-pix_fmt","rgb24","-s",f"{W}x{H}",
     "-r",str(FPS),"-i","-","-i",AUDIO,"-vf","scale=iw*2:ih*2:flags=neighbor",
     "-c:v","libx264","-crf","18","-pix_fmt","yuv420p","-c:a","aac","-b:a","192k",
-    "-t",str(SONG),"-shortest","/home/annejan/Videos/saturday_night_c64.mp4"],
+    "-t",str(SONG),"-shortest",f"/home/annejan/Videos/{OUTNAME}_c64.mp4"],
     stdin=subprocess.PIPE)
 
 cursor=0
@@ -77,4 +78,4 @@ for f in range(NF):
     ff.stdin.write(frame.tobytes())
     if f%2500==0: print(f"{f}/{NF}")
 ff.stdin.close(); ff.wait()
-print("done -> ~/Videos/saturday_night_c64.mp4")
+print(f"done -> ~/Videos/{OUTNAME}_c64.mp4")

@@ -12,22 +12,15 @@ placeholder — rescale after the SID lands.
 """
 import re, json, sys
 
-LRC = "saturday_night.lrc"
-# --- timing anchor (FILL IN from final SID) ---
-V0_LRC, S0_SID, RATIO = 0.0, 0.0, 1.0   # LRC already timed to this render
+CLIP=json.load(open('clip.json'))          # run from repo root
+LRC=CLIP['lrc']
+V0_LRC, S0_SID, RATIO = 0.0, 0.0, CLIP['ratio']   # ratio=1 if LRC already timed to render
 MAXC, MAXLINES = 24, 80
-
-# long lines -> <=24 readable forms (keep the words; the DA-BA scat shortened)
-ABBR = {
- "I FEEL THE AIR IS GETTING HOT": None,            # None => split at word boundary
- "YOU KNOW I'LL TAKE YOU TO THE TOP": "I'LL TAKE YOU TO THE TOP",
- "IT'S PARTY TIME AND NOT ONE MINUTE WE CAN LOSE": None,
- "DA BA DA DAM DEE DEE DEE DA DEE DA DA DAM": "DA BA DA DAM DEE DEE",
-}
-# "Saturday night, Saturday night" chorus run -> teasing build, resolve to
-# "SATURDAY NIGHT" on the last of each run.
-SAT="SATURDAY NIGHT SATURDAY NIGHT"
-SATBUILD=["SATURDAY","SATURDAY SATURDAY","SATURDAY NIGHT","SATURDAY NIGHT SATURDAY"]
+ABBR=CLIP.get('abbr',{})                   # long lines -> <=24 (null => split)
+_b=CLIP.get('build')                       # optional chorus build-up
+SAT      = _b['match']   if _b else None
+SATBUILD = _b['seq']     if _b else []
+SATRESOLVE = _b['resolve'] if _b else ""
 def clean(s):
     s=re.sub(r'\(.*?\)','',s).replace(',','').upper().strip()
     s=re.sub(r'\s+',' ',s)
@@ -49,10 +42,10 @@ for l in open(LRC,encoding='utf-8'):
     rows.append((int(m.group(1))*60+float(m.group(2)), clean(m.group(3))))
 c=0
 for i,(t,txt) in enumerate(rows):
-    if txt==SAT:
+    if SAT and txt==SAT:
         nxt=rows[i+1][1] if i+1<len(rows) else ""
-        if nxt==SAT: rows[i]=(t,SATBUILD[c%4]); c+=1
-        else: rows[i]=(t,"SATURDAY NIGHT"); c=0
+        if nxt==SAT: rows[i]=(t,SATBUILD[c%len(SATBUILD)]); c+=1
+        else: rows[i]=(t,SATRESOLVE); c=0
     else: c=0
 
 ent=[]
