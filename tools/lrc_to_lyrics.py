@@ -26,13 +26,17 @@ def clean(s):
     s=re.sub(r'\s+',' ',s)
     return s
 def fit(s):
-    if s in ABBR and ABBR[s]: return [ABBR[s]]
+    # abbr maps a phrase -> <=24 form (or "" / None to drop it entirely)
+    if s in ABBR:
+        if not ABBR[s]: return []
+        s=ABBR[s]
     if len(s)<=MAXC: return [s]
     cut=s.rfind(' ',0,MAXC+1)
     if cut<=0: return [s[:MAXC]]
     a,b=s[:cut],s[cut+1:]
-    if len(b)<=4: return [a]          # drop tiny orphan tails
-    return [a,b]
+    rest=fit(b)                       # recurse: LRC may cram several phrases per line
+    if not rest and len(b)<=4: return [a]   # drop tiny orphan tail
+    return [a]+rest
 
 # parse rows, then apply the Saturday build
 rows=[]
@@ -53,8 +57,9 @@ for t,txt in rows:
     st=round(S0_SID+(t-V0_LRC)*RATIO,1)
     if not txt: ent.append((st,"")); continue
     parts=fit(txt)
-    ent.append((st,parts[0]))
-    if len(parts)>1: ent.append((round(st+1.3,1),parts[1]))
+    if not parts: ent.append((st,"")); continue
+    for j,p in enumerate(parts):
+        ent.append((round(st+1.3*j,1),p))
 
 # clear lingering text during instrumental gaps: if a line is followed by a
 # >GAP-second hole, drop a blank ~HOLD s after it so it doesn't linger forever.

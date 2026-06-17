@@ -8,6 +8,12 @@ src/*.prg
 src/*.sym
 src/*.efo
 src/*.bin
+# Generated source — only src/lyriceng.asm is hand-written; the rest are
+# emitted per active clip by gen_parts.py / lyric_assets.py.
+src/p*.asm
+src/lyric_n.asm
+src/lyric_fade.asm
+src/test_core.asm
 parts_pef/
 out/
 __pycache__/

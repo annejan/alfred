@@ -1,4 +1,0 @@
-.label setup_gfx=$84b
-.label loop=$848
-.label irq=$88c
-.label copycol=$870
