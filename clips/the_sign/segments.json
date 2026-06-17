@@ -1,0 +1,156 @@
+{
+ "bpm": 94.04,
+ "beat": 0.638,
+ "phase": 0.0,
+ "song_len": 260.0,
+ "video_len": 197.4,
+ "segments": [
+  {
+   "idx": 0,
+   "start": 0.0,
+   "end": 8.932,
+   "dur_frames": 447,
+   "video_t": 2.034
+  },
+  {
+   "idx": 1,
+   "start": 8.932,
+   "end": 28.072,
+   "dur_frames": 957,
+   "video_t": 11.141
+  },
+  {
+   "idx": 2,
+   "start": 28.072,
+   "end": 36.366,
+   "dur_frames": 415,
+   "video_t": 23.202
+  },
+  {
+   "idx": 3,
+   "start": 36.366,
+   "end": 44.022,
+   "dur_frames": 383,
+   "video_t": 29.354
+  },
+  {
+   "idx": 4,
+   "start": 44.022,
+   "end": 65.714,
+   "dur_frames": 1085,
+   "video_t": 38.364
+  },
+  {
+   "idx": 5,
+   "start": 65.714,
+   "end": 77.836,
+   "dur_frames": 606,
+   "video_t": 52.653
+  },
+  {
+   "idx": 6,
+   "start": 77.836,
+   "end": 93.786,
+   "dur_frames": 798,
+   "video_t": 62.728
+  },
+  {
+   "idx": 7,
+   "start": 93.786,
+   "end": 114.84,
+   "dur_frames": 1053,
+   "video_t": 76.001
+  },
+  {
+   "idx": 8,
+   "start": 114.84,
+   "end": 122.496,
+   "dur_frames": 383,
+   "video_t": 88.934
+  },
+  {
+   "idx": 9,
+   "start": 122.496,
+   "end": 132.066,
+   "dur_frames": 479,
+   "video_t": 95.182
+  },
+  {
+   "idx": 10,
+   "start": 132.066,
+   "end": 151.206,
+   "dur_frames": 957,
+   "video_t": 104.628
+  },
+  {
+   "idx": 11,
+   "start": 151.206,
+   "end": 160.138,
+   "dur_frames": 447,
+   "video_t": 116.835
+  },
+  {
+   "idx": 12,
+   "start": 160.138,
+   "end": 170.346,
+   "dur_frames": 510,
+   "video_t": 123.907
+  },
+  {
+   "idx": 13,
+   "start": 170.346,
+   "end": 185.658,
+   "dur_frames": 766,
+   "video_t": 132.82
+  },
+  {
+   "idx": 14,
+   "start": 185.658,
+   "end": 197.78,
+   "dur_frames": 606,
+   "video_t": 143.718
+  },
+  {
+   "idx": 15,
+   "start": 197.78,
+   "end": 209.902,
+   "dur_frames": 606,
+   "video_t": 152.922
+  },
+  {
+   "idx": 16,
+   "start": 209.902,
+   "end": 222.024,
+   "dur_frames": 606,
+   "video_t": 162.125
+  },
+  {
+   "idx": 17,
+   "start": 222.024,
+   "end": 230.318,
+   "dur_frames": 415,
+   "video_t": 170.457
+  },
+  {
+   "idx": 18,
+   "start": 230.318,
+   "end": 237.974,
+   "dur_frames": 383,
+   "video_t": 176.608
+  },
+  {
+   "idx": 19,
+   "start": 237.974,
+   "end": 248.82,
+   "dur_frames": 542,
+   "video_t": 183.148
+  },
+  {
+   "idx": 20,
+   "start": 248.82,
+   "end": 260.0,
+   "dur_frames": 559,
+   "video_t": 191.458
+  }
+ ]
+}

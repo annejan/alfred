@@ -5,17 +5,17 @@
 //
 // Resident data (above the SID, $1000-$3005):
 //   FONT  $3100  64 glyphs x 8 = 512B
-//   UNIQ  $3300  LYRIC_NUNIQ x 24 screen codes
-//   ORDER $3500  LYRIC_NLINES bytes (unique-line index per onset)
-//   ONSET $3580  LYRIC_NLINES x 2 (LE PAL frame)
+//   UNIQ  $3300  LYRIC_NUNIQ x 24 screen codes (room to $37ff = 53 unique lines)
+//   ORDER $3800  LYRIC_NLINES bytes (unique-line index per onset)
+//   ONSET $3880  LYRIC_NLINES x 2 (LE PAL frame)
 //
 // Jump table: $0c00 lyric_play / $0c03 init / $0c06 blit_line / $0c09 setup_sprites
 
 .import source "lyric_n.asm"          // LYRIC_NLINES, LYRIC_NUNIQ
 .const FONT  = $3100
 .const UNIQ  = $3300
-.const ORDER = $3600
-.const ONSET = $3680
+.const ORDER = $3800
+.const ONSET = $3880
 .const NLINES = LYRIC_NLINES
 .const SID_PLAY = $1003
 .const B1 = $4800

@@ -246,8 +246,8 @@ def main():
         # resident chunk: SID + lyric engine + precomputed sprite shapes
         # (lines 0-27 at $2a00, overflow 28+ at $c000) + onset table.
         music = (f' --music {CLIP["sid"]},,7c out/lyriceng.bin,0c00 out/lyric_font.bin,3100'
-                 ' out/lyric_uniq.bin,3300 out/lyric_order.bin,3600'
-                 ' out/lyric_onset.bin,3680') if i == 0 else ''
+                 ' out/lyric_uniq.bin,3300 out/lyric_order.bin,3800'
+                 ' out/lyric_onset.bin,3880') if i == 0 else ''
         bl.append(f'"$MKPEF" -o parts_pef/p{nn}.pef src/p{nn}.efo {data}{music}')
     bl += [
         'echo ">>> linking with pefchain"',
